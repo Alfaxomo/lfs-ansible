@@ -1,0 +1,10 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 1.4. Resources"
+  vars:
+    msg: |
+      Linux From Scratch - Version Latest Stable
+      Chapter 1.4. Resources
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter01/resources.html
+  debug:
+    msg: "{{ msg.split('\n') }}"

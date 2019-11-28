@@ -1,0 +1,25 @@
+--- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/linux-headers.html
+## 5.6. Linux-4.20.12 API Headers
+
+- name: "{{ansible_distribution}}: unpack linux"
+  unarchive:
+    creates: "{{lfs}}/sources/linux-4.20.12"
+    dest: "{{lfs}}/sources"
+    src: "{{lfs}}/sources/linux-4.20.12.tar.xz"
+
+- name: "{{ansible_distribution}}: make mrproper"
+  make:
+    chdir: "{{lfs}}/sources/linux-4.20.12"
+    params:
+      NUM_THREADS: 4
+    target: mrproper
+
+- name: "{{ansible_distribution}}: make install"
+  make:
+    chdir: "{{lfs}}/sources/linux-4.20.12"
+    params:
+      INSTALL_HDR_PATH: dest
+    target: headers_install
+
+- name: "{ansible_distribution}}: post copy"
+  shell: cp -rv dest/include/* /tools/include

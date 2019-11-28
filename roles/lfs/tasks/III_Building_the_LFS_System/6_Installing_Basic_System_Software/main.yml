@@ -1,0 +1,240 @@
+--- # http://www.linuxfromscratch.org/lfs/view/stable/chapter06/introduction.html
+## Linux From Scratch - Version 8.4
+## Chapter 6. Installing Basic System Software
+
+- name: "{{ansible_distribution}}: 6.2. Preparing Virtual Kernel File Systems"
+  include: kernfs.yml
+
+- name: "{{ansible_distribution}}: 6.3. Package Management"
+  include: pkgmgt.yml
+
+- name: "{{ansible_distribution}}: 6.4. Entering the Chroot Environment"
+  include: chroot.yml
+
+- name: "{{ansible_distribution}}: 6.5. Creating Directories"
+  include: creatingdirs.yml
+
+- name: "{{ansible_distribution}}: 6.6. Creating Essential Files and Symlinks"
+  include: createfiles.yml
+
+- name: "{{ansible_distribution}}: 6.7. Linux-4.20.12 API Headers"
+  include: linux_headers.yml
+
+- name: "{{ansible_distribution}}: 6.8. Man-pages-4.16"
+  include: man_pages.yml
+
+- name: "{{ansible_distribution}}: 6.9. Glibc-2.29"
+  include: glibc.yml
+
+- name: "{{ansible_distribution}}: 6.10. Adjusting the Toolchain"
+  include: adjusting.yml
+
+- name: "{{ansible_distribution}}: 6.11. Zlib-1.2.11"
+  include: zlib.yml
+
+- name: "{{ansible_distribution}}: 6.12. File-5.36"
+  include: file.yml
+
+- name: "{{ansible_distribution}}: 6.13. Readline-8.0"
+  include: readline.yml
+
+- name: "{{ansible_distribution}}: 6.14. M4-1.4.18"
+  include: m4.yml
+
+- name: "{{ansible_distribution}}: 6.15. Bc-1.07.1"
+  include: bc.yml
+
+- name: "{{ansible_distribution}}: 6.16. Binutils-2.32"
+  include: binutils.yml
+
+- name: "{{ansible_distribution}}: 6.17. GMP-6.1.2"
+  include: gmp.yml
+
+- name: "{{ansible_distribution}}: 6.18. MPFR-4.0.2"
+  include: mpfr.yml
+
+- name: "{{ansible_distribution}}: 6.19. MPC-1.1.0"
+  include: mpc.yml
+
+- name: "{{ansible_distribution}}: 6.20. Shadow-4.6"
+  include: shadow.yml
+
+- name: "{{ansible_distribution}}: 6.21. GCC-8.2.0"
+  include: gcc.yml
+
+- name: "{{ansible_distribution}}: 6.22. Bzip2-1.0.6"
+  include: bzip.yml
+
+- name: "{{ansible_distribution}}: 6.23. Pkg-config-0.29.2"
+  include: pkg_config.yml
+
+- name: "{{ansible_distribution}}: 6.24. Ncurses-6.1"
+  include: ncurses.yml
+
+- name: "{{ansible_distribution}}: 6.25. Attr-2.4.48"
+  include: attr.yml
+
+- name: "{{ansible_distribution}}: 6.26. Acl-2.2.53"
+  include: acl.yml
+
+- name: "{{ansible_distribution}}: 6.27. Libcap-2.26"
+  include: libcap.yml
+
+- name: "{{ansible_distribution}}: 6.28. Sed-4.7"
+  include: sed.yml
+
+- name: "{{ansible_distribution}}: 6.29. Psmisc-23.2"
+  include: psmisc.yml
+
+- name: "{{ansible_distribution}}: 6.30. Iana-Etc-2.30"
+  include: iana_etc.yml
+
+- name: "{{ansible_distribution}}: 6.31. Bison-3.3.2"
+  include: bison.yml
+
+- name: "{{ansible_distribution}}: 6.32. Flex-2.6.4"
+  include: flex.yml
+
+- name: "{{ansible_distribution}}: 6.33. Grep-3.3"
+  include: grep.yml
+
+- name: "{{ansible_distribution}}: 6.34. Bash-5.0"
+  include: bash.yml
+
+- name: "{{ansible_distribution}}: 6.35. Libtool-2.4.6"
+  include: libtool.yml
+
+- name: "{{ansible_distribution}}: 6.36. GDBM-1.18.1"
+  include: gdbm.yml
+
+- name: "{{ansible_distribution}}: 6.37. Gperf-3.1"
+  include: gperf.yml
+
+- name: "{{ansible_distribution}}: 6.38. Expat-2.2.6"
+  include: expat.yml
+
+- name: "{{ansible_distribution}}: 6.39. Inetutils-1.9.4"
+  include: inetutils.yml
+
+- name: "{{ansible_distribution}}: 6.40. Perl-5.28.1"
+  include: perl.yml
+
+- name: "{{ansible_distribution}}: 6.41. XML::Parser-2.44"
+  include: xml_parser.yml
+
+- name: "{{ansible_distribution}}: 6.42. Intltool-0.51.0"
+  include: intltool.yml
+
+- name: "{{ansible_distribution}}: 6.43. Autoconf-2.69"
+  include: autoconf.yml
+
+- name: "{{ansible_distribution}}: 6.44. Automake-1.16.1"
+  include: automake.yml
+
+- name: "{{ansible_distribution}}: 6.45. Xz-5.2.4"
+  include: xz.yml
+
+- name: "{{ansible_distribution}}: 6.46. Kmod-26"
+  include: kmod.yml
+
+- name: "{{ansible_distribution}}: 6.47. Gettext-0.19.8.1"
+  include: gettext.yml
+
+- name: "{{ansible_distribution}}: 6.48. Libelf from Elfutils-0.176"
+  include: libelf.yml
+
+- name: "{{ansible_distribution}}: 6.49. Libffi-3.2.1"
+  include: libffi.yml
+
+- name: "{{ansible_distribution}}: 6.50. OpenSSL-1.1.1a"
+  include: openssl.yml
+
+- name: "{{ansible_distribution}}: 6.51. Python-3.7.2"
+  include: Python.yml
+
+- name: "{{ansible_distribution}}: 6.52. Ninja-1.9.0"
+  include: ninja.yml
+
+- name: "{{ansible_distribution}}: 6.53. Meson-0.49.2"
+  include: meson.yml
+
+- name: "{{ansible_distribution}}: 6.54. Coreutils-8.30"
+  include: coreutils.yml
+
+- name: "{{ansible_distribution}}: 6.55. Check-0.12.0"
+  include: check.yml
+
+- name: "{{ansible_distribution}}: 6.56. Diffutils-3.7"
+  include: diffutils.yml
+
+- name: "{{ansible_distribution}}: 6.57. Gawk-4.2.1"
+  include: gawk.yml
+
+- name: "{{ansible_distribution}}: 6.58. Findutils-4.6.0"
+  include: findutils.yml
+
+- name: "{{ansible_distribution}}: 6.59. Groff-1.22.4"
+  include: groff.yml
+
+- name: "{{ansible_distribution}}: 6.60. GRUB-2.02"
+  include: grub.yml
+
+- name: "{{ansible_distribution}}: 6.61. Less-530"
+  include: less.yml
+
+- name: "{{ansible_distribution}}: 6.62. Gzip-1.10"
+  include: gzip.yml
+
+- name: "{{ansible_distribution}}: 6.63. IPRoute2-4.20.0"
+  include: iproute2.yml
+
+- name: "{{ansible_distribution}}: 6.64. Kbd-2.0.4"
+  include: kbd.yml
+
+- name: "{{ansible_distribution}}: 6.65. Libpipeline-1.5.1"
+  include: libpipeline.yml
+
+- name: "{{ansible_distribution}}: 6.66. Make-4.2.1"
+  include: make.yml
+
+- name: "{{ansible_distribution}}: 6.67. Patch-2.7.6"
+  include: patch.yml
+
+- name: "{{ansible_distribution}}: 6.68. Man-DB-2.8.5"
+  include: man_db.yml
+
+- name: "{{ansible_distribution}}: 6.69. Tar-1.31"
+  include: tar.yml
+
+- name: "{{ansible_distribution}}: 6.70. Texinfo-6.5"
+  include: texinfo.yml
+
+- name: "{{ansible_distribution}}: 6.71. Vim-8.1"
+  include: vim.yml
+
+- name: "{{ansible_distribution}}: 6.72. Procps-ng-3.3.15"
+  include: procps_ng.yml
+
+- name: "{{ansible_distribution}}: 6.73. Util-linux-2.33.1"
+  include: util_linux.yml
+
+- name: "{{ansible_distribution}}: 6.74. E2fsprogs-1.44.5"
+  include: e2fsprogs.yml
+
+- name: "{{ansible_distribution}}: 6.75. Sysklogd-1.5.1"
+  include: sysklogd.yml
+
+- name: "{{ansible_distribution}}: 6.76. Sysvinit-2.93"
+  include: sysvinit.yml
+
+- name: "{{ansible_distribution}}: 6.77. Eudev-3.2.7"
+  include: eudev.yml
+
+- name: "{{ansible_distribution}}: 6.78. About Debugging Symbols"
+  include: aboutdebug.yml
+
+- name: "{{ansible_distribution}}: 6.79. Stripping Again"
+  include: strippingagain.yml
+
+- name: "{{ansible_distribution}}: 6.80. Cleaning Up"
+  include: revisedchroot.yml

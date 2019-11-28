@@ -1,0 +1,93 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 3.1. Introduction"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 3.1. Introduction
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter03/introduction.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ansible_distribution}}: create the sources directory"
+  file:
+    mode: a+wt
+    path: "{{ lfs }}/sources"
+    state: directory
+
+#- name: "{{ ansible_distribution }}: set some vars and test"
+#  vars:
+#    wget_contents: "{{ lookup('file', lfs + '/sources/wget-list') }}"
+#    m5sum_contents: "{{ lookup('file', lfs + '/sources/md5sums') }}"
+#
+#  debug:
+#    msg: "{{ item }}"
+#  with_items:
+#    - "{{ wget_contents }}"
+#    - "{{ md5sum_contents }}"
+#
+# this doesn't work ffs, no idea why, getting:
+# [WARNING]: Unable to find '/mnt/lfs/sources/wget-list' in expected paths (use -vvvvv to see paths)
+# File lookup using None as file
+# fatal: [192.168.0.52]: FAILED! => {
+#     "msg": "An unhandled exception occurred while templating '{{ lookup('file', lfs + '/sources/wget-list') }}'. Error was a <class 'ansible.errors.AnsibleError'>, original message: An unhandled exception occurred while running the lookup plugin 'file'. Error was a <class 'ansible.errors.AnsibleError'>, original message: could not locate file in lookup: /mnt/lfs/sources/wget-list"
+# However:
+# ls -la /mnt/lfs/sources/wget-list
+# -rw-r--r--. 1 root root 5254 Nov 24 11:45 /mnt/lfs/sources/wget-list
+#
+#- name: "{{ ansible_distribution }}: download the sources list file"
+#  get_url:
+#    dest: "{{ lfs }}/sources"
+#    url: "{{ item }}"
+#  with_items:
+#    - http://www.linuxfromscratch.org/lfs/view/stable/wget-list
+#    - http://www.linuxfromscratch.org/lfs/view/stable/md5sums
+
+#- name: "{{ ansible_distribution }}: create custom fact for md5sums"
+#  set_fact:
+#    md5_value: "{{ lookup('file', lfs + '/sources/md5sums') }}"
+#
+#- name: output md5_value
+#  debug:
+#    msg: "{{ md5_value }}"
+#
+#- name: "{{ ansible_distribution }}: download the sources list file"
+#  # https://github.com/sodle/ansible-lfs/blob/master/download_sources.yml
+#  # https://stackoverflow.com/questions/36448944/is-there-an-elegant-way-to-check-file-integrity-with-md5-in-ansible-using-md5-fi
+#  get_url:
+#    url: "{{ item }}"
+#    dest: "{{ lfs }}/sources/{{ item.split('/')[-1] }}"
+#  with_items: "{{ lookup('file', lfs + '/sources/wget-list').splitlines() }}"
+
+## NOTE
+### Not doing this until I can figure out how to make it idempotent
+#- name: "{{ansible_distribution}}: install the package list file"
+#  copy:
+#    dest: "{{lfs}}/sources/package-list"
+#    src: package-list
+#
+#- name: "{{ansible_distribution}}: get a list of the packages"
+#  command: cat "{{lfs}}/sources/package-list"
+#  register: package_list
+#
+#- name: "{{ansible_distribution}}: show me the list of files"
+#  debug: msg={{package_list.stdout_lines}}
+#
+#- name: "{{ansible_distribution}}: install the sources list file"
+#  copy:
+#    dest: "{{lfs}}/sources/wget-list"
+#    src: wget-list
+#
+#- name: "{{ansible_distribution}}: download the required sources"
+#  get_url:
+#    dest: "{{lfs}}/sources"
+#    url: file:///tmp/sources/package-list
+#  #command: wget --input-file="{{lfs}}/sources/wget-list" --continue --directory-prefix={{lfs}}/sources
+#  #args:
+#  #  creates: package_list
+#
+# optionally check the md5sums
+#pushd $LFS/sources
+#md5sum -c md5sums
+#popd
+#

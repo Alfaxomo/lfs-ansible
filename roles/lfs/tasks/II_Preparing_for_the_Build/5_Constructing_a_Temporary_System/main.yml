@@ -1,0 +1,116 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 5. Constructing a Temporary System"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter Chapter 5. Constructing a Temporary System
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/introduction.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ansible_distribution}}: 5.1. Introduction"
+  include: introduction.yml
+
+- name: "{{ansible_distribution}}: 5.2. Toolchain Technical Notes"
+  include: toolchaintechnotes.yml
+
+- name: "{{ansible_distribution}}: 5.3. General Compilation Instructions"
+  include: generalinstructions.yml
+
+- name: "{{ansible_distribution}}: 5.4. binutils - Pass 1"
+  become: true
+  become_user: lfs
+  include: binutils_pass1.yml
+
+#- name: "{{ansible_distribution}}: 5.5. GCC-8.2.0 - Pass 1"
+#  become: true
+#  become_user: lfs
+#  include: gcc_pass1.yml
+
+#- name: "{{ansible_distribution}}: 5.6. Linux-4.20.12 API Headers"
+#  include: linux_headers.yml
+#
+#- name: "{{ansible_distribution}}: 5.7. Glibc-2.29"
+#  include: glibc.yml
+#
+#- name: "{{ansible_distribution}}: 5.8. Libstdc++ from GCC-8.2.0"
+#  include: gcc_libstdc.yml
+#
+#- name: "{{ansible_distribution}}: 5.9. Binutils-2.32 - Pass 2"
+#  include: binutils_pass2.yml
+#
+#- name: "{{ansible_distribution}}: 5.10. GCC-8.2.0 - Pass 2"  
+#  include: gcc_pass2.yml
+#
+#- name: "{{ansible_distribution}}: 5.11. Tcl-8.6.9"  
+#  include: tcl.yml
+#
+#- name: "{{ansible_distribution}}: 5.12. Expect-5.45.4"
+#  include: expect.yml
+#
+#- name: "{{ansible_distribution}}: 5.13. DejaGNU-1.6.2"
+#  include: dejagnu.yml
+#
+#- name: "{{ansible_distribution}}: 5.14. M4-1.4.18"
+#  include: m4.yml
+#
+#- name: "{{ansible_distribution}}: 5.15. Ncurses-6.1"
+#  include: ncurses.yml
+#
+#- name: "{{ansible_distribution}}: 5.16. Bash-5.0"
+#  include: bash.yml
+#
+#- name: "{{ansible_distribution}}: 5.17. Bison-3.3.2"
+#  include: bison.yml
+#
+#- name: "{{ansible_distribution}}: 5.18. Bzip2-1.0.6"
+#  include: bzip2.yml
+#
+#- name: "{{ansible_distribution}}: 5.19. Coreutils-8.30"
+#  include: coreutils.yml
+#
+#- name: "{{ansible_distribution}}: 5.20. Diffutils-3.7"
+#  include: diffutils.yml
+#
+#- name: "{{ansible_distribution}}: 5.21. File-5.36"
+#  include: file.yml
+#
+#- name: "{{ansible_distribution}}: 5.22. Findutils-4.6.0"
+#  include: findutils.yml
+#
+#- name: "{{ansible_distribution}}: 5.23. Gawk-4.2.1"
+#  include: gawk.yml
+#
+#- name: "{{ansible_distribution}}: 5.24. Gettext-0.19.8.1"
+#  include: gettext.yml
+#
+#- name: "{{ansible_distribution}}: 5.25. Grep-3.3"
+#  include: grep.yml
+#
+#- name: "{{ansible_distribution}}: 5.26. Gzip-1.10"
+#  include: gzip.yml
+#
+#- name: "{{ansible_distribution}}: 5.27. Make-4.2.1"
+#  include: make.yml
+#
+#- name: "{{ansible_distribution}}: 5.28. Patch-2.7.6"
+#  include: patch.yml
+#
+#- name: "{{ansible_distribution}}: 5.29. Perl-5.28.1"
+#  include: perl.yml
+#
+#- name: "{{ansible_distribution}}: 5.30. Python-3.7.2"
+#  include: Python.yml
+#
+#- name: "{{ansible_distribution}}: 5.31. Sed-4.7"
+#  include: sed.yml
+#
+#- name: "{{ansible_distribution}}: 5.32. Tar-1.31"
+#  include: tar.yml
+#
+#- name: "{{ansible_distribution}}: 5.33. Texinfo-6.5"
+#  include: texinfo.yml
+#
+#- name: "{{ansible_distribution}}: 5.34. Xz-5.2.4"
+#  include: xz.yml

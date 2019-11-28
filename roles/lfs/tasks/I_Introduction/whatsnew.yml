@@ -1,0 +1,10 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 1.2. What's new since the last release "
+  vars:
+    msg: |
+      Linux From Scratch - Version Latest Stable
+      Chapter 1.2. What's new since the last release 
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter01/whatsnew.html
+  debug:
+    msg: "{{ msg.split('\n') }}"

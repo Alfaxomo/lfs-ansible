@@ -1,0 +1,10 @@
+---
+
+- name: "{{ ansible_distribution }}: 2.3. Building LFS in Stages"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      2.3. Building LFS in Stages
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter02/stages.html
+  debug:
+    msg: "{{ msg.split('\n') }}"

@@ -1,0 +1,10 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 4.6. About the Test Suites"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 4.6. About the Test Suites
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter04/abouttestsuites.html
+  debug:
+    msg: "{{ msg.split('\n') }}"

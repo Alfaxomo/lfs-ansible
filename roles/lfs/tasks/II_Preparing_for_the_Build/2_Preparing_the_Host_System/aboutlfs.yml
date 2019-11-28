@@ -1,0 +1,24 @@
+---
+
+- name: "{{ ansible_distribution }}: 2.6. Setting The $LFS Variable"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      2.6. Setting The $LFS Variable
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter02/aboutlfs.html
+      {{ lfs }}
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: create /mnt/lfs"
+  file:
+    path: "{{ lfs }}"
+    state: directory
+
+- name: "{{ ansible_distribution }}: add $LFS var to .bash_profile"
+  lineinfile:
+    dest: "{{ item }}"
+    line: export LFS={{ lfs }}
+  with_items:
+    - /root/.bash_profile
+    - "{{ ansible_user_dir }}/.bash_profile"

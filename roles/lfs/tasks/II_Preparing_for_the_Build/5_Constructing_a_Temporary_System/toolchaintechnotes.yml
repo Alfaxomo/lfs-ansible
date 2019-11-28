@@ -1,0 +1,10 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 5.2. Toolchain Technical Notes"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.2. Toolchain Technical Notes
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/toolchaintechnotes.html
+  debug:
+    msg: "{{ msg.split('\n') }}"

@@ -1,0 +1,32 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 2. Preparing the Host System"
+  # https://code-examples.net/en/q/209ab87
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 2. Preparing the Host System
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter02/introduction.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: 2.1. Introduction"
+  include: introduction.yml
+
+- name: "{{ ansible_distribution }}: 2.2. Host System Requirements"
+  include: hostreqs.yml
+
+- name: "{{ ansible_distribution }}: 2.3 Building LFS in Stages"
+  include: stages.yml
+
+- name: "{{ ansible_distribution }}: 2.4 Creating a New Partition"
+  include: creatingpartition.yml
+
+- name: "{{ ansible_distribution }}: 2.5 Creating a File System on the Partition"
+  include: creatingfilesystem.yml
+
+- name: "{{ ansible_distribution }}: 2.6. Setting The $LFS Variable"
+  include: aboutlfs.yml
+
+- name: "{{ ansible_distribution }}: 2.7. Mounting the New Partition"
+  include: mounting.yml

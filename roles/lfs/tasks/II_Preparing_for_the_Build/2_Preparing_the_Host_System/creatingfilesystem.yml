@@ -1,0 +1,25 @@
+---
+
+- name: "{{ ansible_distribution }}: 2.5. Creating a File System on the Partition"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      2.5. Creating a File System on the Partition
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter02/creatingfilesystem.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: create a filesystem on /"
+  filesystem:
+    fstype: "{{ fs }}" 
+    dev: "{{ device }}1"
+
+#- name: "{{ ansible_distribution }}: create a filesystem on /"
+#  filesystem:
+#    fstype: "{{ fs }}"
+#    dev: /dev/{{ device }}2
+#
+#- name: "{{ ansible_distribution }}: create swap"
+#  filesystem:
+#    fstype: swap
+#    dev: /dev/{{ device }}3

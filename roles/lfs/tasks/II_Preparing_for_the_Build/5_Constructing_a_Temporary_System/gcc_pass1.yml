@@ -1,0 +1,153 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 5.5. gcc pass 1"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.5. gcc pass 1
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-pass1.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: set the gcc var"
+  shell: find "{{ lfs }}/sources" -type f -name gcc\*.tar.xz
+  register: gcc_source
+
+- name: "{{ ansible_distribution }}: output gcc var"
+  debug:
+    msg: "{{ gcc_source.stdout }}"
+
+- name: action 2
+  vars:
+    gcc: "{{ gcc_source.stdout.split('.tar.xz')[0] }}"
+  debug:
+    msg: "{{ gcc }}"
+
+- name: "{{ ansible_distribution }}: unpack gcc"
+  unarchive:
+    creates: "{{ gcc_source.stdout.split('.tar.xz')[0] }}"
+    dest: "{{ lfs }}/sources"
+    remote_src: yes
+    src: "{{ gcc_source.stdout }}"
+
+- name: "{{ ansible_distribution }}: set mpfr var"
+  shell: find "{{ lfs }}/sources" -type f -name mpfr\*.tar.xz
+  register: mpfr_source
+
+- name: "{{ ansible_distribution }}: output mpfr var"
+  debug:
+    msg: "{{ mpfr_source.stdout }}"
+
+- name: "{{ ansible_distribution }}: set gmp var"
+  shell: find "{{ lfs }}/sources" -type f -name gmp\*.tar.xz
+  register: gmp_source
+
+- name: "{{ ansible_distribution }}: output gmp var"
+  debug:
+    msg: "{{ gmp_source.stdout }}"
+
+- name: "{{ ansible_distribution }}: set mpc var"
+  shell: find "{{ lfs }}/sources" -type f -name mpc\*.tar.gz
+  register: mpc_source
+
+- name: "{{ ansible_distribution }}: output mpc var"
+  debug:
+    msg: "{{ mpc_source.stdout }}"
+
+- name: "{{ ansible_distribution }}: extract mpfr, gmp and mpc"
+  unarchive:
+    dest: "{{ gcc_source.stdout.split('.tar.xz')[0] }}"
+    remote_src: yes
+    src: "{{ item }}"
+  with_items:
+    - "{{ gmp_source.stdout }}"
+    - "{{ mpc_source.stdout }}"
+    - "{{ mpfr_source.stdout }}"
+
+- name: "{{ansible_distribution}}: rename gmp-*, mpc-* and mpfr-* directories"
+  file:
+    dest: "{{ item.dest }}"
+    src: "{{ item.src }}"
+    state: link
+  with_items:
+    - { src: "{{ gcc_source.stdout.split('.tar.xz')[0] }}/gmp-6.1.2", dest: "{{ gcc_source.stdout.split('.tar.xz')[0] }}/gmp" }
+    - { src: "{{ gcc_source.stdout.split('.tar.xz')[0] }}/mpc-1.1.0", dest: "{{ gcc_source.stdout.split('.tar.xz')[0] }}/mpc" }
+    - { src: "{{ gcc_source.stdout.split('.tar.xz')[0] }}/mpfr-4.0.2", dest: "{{ gcc_source.stdout.split('.tar.xz')[0] }}/mpfr" }
+
+- name: "{{ ansible_distribution }}: change the location of GCC's default dynamic linker to use the one installed in /tools"
+  args:
+    chdir: "{{ gcc_source.stdout.split('.tar.xz')[0] }}"
+  shell: |
+    for file in gcc/config/{linux,i386/linux{,64}}.h
+    do
+      cp -uv $file{,.orig}
+      sed -e 's@/lib\(64\)\?\(32\)\?/ld@/tools&@g' \
+          -e 's@/usr@/tools@g' $file.orig > $file
+      echo '
+    #undef STANDARD_STARTFILE_PREFIX_1
+    #undef STANDARD_STARTFILE_PREFIX_2
+    #define STANDARD_STARTFILE_PREFIX_1 "/tools/lib/"
+    #define STANDARD_STARTFILE_PREFIX_2 ""' >> $file
+      touch $file.orig
+    done
+
+- name: "{{ ansible_distribution }}: set the default directory name for 64-bit libraries to lib"
+  args:
+    chdir: "{{ gcc_source.stdout.split('.tar.xz')[0] }}"
+  shell: |
+    case $(uname -m) in
+      x86_64)
+        sed -e '/m64=/s/lib64/lib/' \
+            -i.orig gcc/config/i386/t-linux64
+     ;;
+    esac
+
+- name: "{{ ansible_distribution }}: create the build directory"
+  file:
+    dest: "{{ gcc_source.stdout.split('.tar.xz')[0] }}/build"
+    state: directory
+
+- name: "{{ansible_distribution}}: configure"
+  args: 
+    chdir: "{{ gcc_source.stdout.split('.tar.xz')[0] }}/build"
+  shell: |
+    ../configure                                       \
+        --target=$LFS_TGT                              \
+        --prefix=/tools                                \
+        --with-glibc-version=2.11                      \
+        --with-sysroot=$LFS                            \
+        --with-newlib                                  \
+        --without-headers                              \
+        --with-local-prefix=/tools                     \
+        --with-native-system-header-dir=/tools/include \
+        --disable-nls                                  \
+        --disable-shared                               \
+        --disable-multilib                             \
+        --disable-decimal-float                        \
+        --disable-threads                              \
+        --disable-libatomic                            \
+        --disable-libgomp                              \
+        --disable-libmpx                               \
+        --disable-libquadmath                          \
+        --disable-libssp                               \
+        --disable-libvtv                               \
+        --disable-libstdcxx                            \
+        --enable-languages=c,c++
+
+- name: "{{ansible_distribution}}: make"
+  make:
+    chdir: "{{ gcc_source.stdout.split('.tar.xz')[0] }}/build"
+    params:
+      NUM_THREADS: 4
+
+- name: "{{ansible_distribution}}: make install"
+  make:
+    chdir: "{{ gcc_source.stdout.split('.tar.xz')[0] }}/build"
+    params:
+      NUM_THREADS: 4
+    target: install
+
+- name: "{{ansible_distribution}}: cleanup"
+  file:
+    path: "{{ gcc_source.stdout.split('.tar.xz')[0] }}"
+    state: absent

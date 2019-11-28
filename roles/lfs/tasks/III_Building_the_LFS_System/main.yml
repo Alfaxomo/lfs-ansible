@@ -1,0 +1,13 @@
+--- # III. Building the LFS System
+
+- name: "{{ansible_distribution}}: Chapter 6. Installing Basic System Software"
+  include: 6_Installing_Basic_System_Software/main.yml
+
+- name: "{{ansible_distribution}}: Chapter 7. System Configuration"
+  include: 7_System_Configuration/main.yml
+
+- name: "{{ansible_distribution}}: Chapter 8. Making the LFS System Bootable"
+  include: 8_Making_the_LFS_System_Bootable/main.yml
+
+- name: "{{ansible_distribution}}: Chapter 9. The End"
+  include: 9_The_End/main.yml

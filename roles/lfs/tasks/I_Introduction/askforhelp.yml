@@ -1,0 +1,10 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 1.5. Help"
+  vars:
+    msg: |
+      Linux From Scratch - Version Latest Stable
+      Chapter 1.5. Help
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter01/askforhelp.html
+  debug:
+    msg: "{{ msg.split('\n') }}"

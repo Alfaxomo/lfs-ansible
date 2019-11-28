@@ -1,0 +1,10 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 1.3. Changelog"
+  vars:
+    msg: |
+      Linux From Scratch - Version Latest Stable
+      Chapter 1.3. Changelog
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter01/changelog.html
+  debug:
+    msg: "{{ msg.split('\n') }}"

@@ -1,0 +1,21 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 4.2. Creating the $LFS/tools Directory"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 4.2. Creating the $LFS/tools Directory
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter04/creatingtoolsdir.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: create the tools directory"
+  file:
+    path: "{{ lfs }}/tools"
+    state: directory
+
+- name: "{{ ansible_distribution }}: symlink $LFS/tools to /tools"
+  file:
+    dest: /tools
+    src: "{{ lfs }}/tools"
+    state: link

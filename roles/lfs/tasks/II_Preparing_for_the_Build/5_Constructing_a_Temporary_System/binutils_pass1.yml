@@ -1,0 +1,77 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 5.4 binutils pass 1"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.4. binutils pass 1
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/binutils-pass1.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: set the binutils var"
+  shell: find "{{ lfs }}/sources" -type f -name binutils\*.tar.xz
+  register: binutils_source
+
+- name: "{{ ansible_distribution }}: output var"
+  debug:
+    msg: "{{ binutils_source.stdout }}"
+
+- name: action 2
+  vars:
+    binutils: "{{ binutils_source.stdout.split('.tar.xz')[0] }}"
+  debug:
+    msg: "{{ binutils }}"
+
+- name: "{{ ansible_distribution }}: unpack binutils"
+  unarchive:
+    creates: "{{ binutils_source.stdout.split('.tar.xz')[0] }}"
+    #creates: "{{ binutils }}" # from some fucking stupid reason this var isn't getting picked up although it does above.
+    dest: "{{ lfs }}/sources"
+    remote_src: yes
+    src: "{{ binutils_source.stdout }}"
+
+#- name: "{{ ansible_distribution }}: create the build directory"
+#  file:
+#    dest: "{{ binutils_source.stdout.split('.tar.xz')[0] }}/build"
+#    state: directory
+#
+#- name: "{{ ansible_distribution }}: configure"
+#  args:
+#    chdir: "{{ binutils_source.stdout.split('.tar.xz')[0] }}/build"
+#  shell: |
+#    ../configure --prefix=/tools            \
+#                 --with-sysroot=$LFS        \
+#                 --with-lib-path=/tools/lib \
+#                 --target=$LFS_TGT          \
+#                 --disable-nls              \
+#                 --disable-werror
+#
+#- name: "{{ ansible_distribution }}: make"
+#  make:
+#    chdir: "{{ binutils_source.stdout.split('.tar.xz')[0] }}/build"
+#    params:
+#      NUM_THREADS: 4
+#
+#- name: "{{ ansible_distribution }}: create symlink"
+#  args:
+#    creates: "{{ item }}"
+#  shell: |
+#    case $(uname -m) in
+#      x86_64) mkdir -v /tools/lib && ln -sv lib /tools/lib64 ;;
+#    esac
+#  with_items:
+#    - /tools/lib
+#    - /tools/lib64
+#
+#- name: "{{ ansible_distribution }}: make install"
+#  make:
+#    chdir: "{{ binutils_source.stdout.split('.tar.xz')[0] }}/build"
+#    params:
+#      NUM_THREADS: 4
+#    target: install
+#
+#- name: "{{ ansible_distribution }}: cleanup"
+#  file:
+#    path: "{{ binutils_source.stdout.split('.tar.xz')[0] }}"
+#    state: absent

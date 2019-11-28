@@ -1,0 +1,4 @@
+lfs: /mnt/lfs
+#fs: xfs
+fs: ext4
+cpus: 4

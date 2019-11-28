@@ -1,0 +1,10 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 3.3. Needed Patches"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 3.3. Needed Patches
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter03/patches.html
+  debug:
+    msg: "{{ msg.split('\n') }}"

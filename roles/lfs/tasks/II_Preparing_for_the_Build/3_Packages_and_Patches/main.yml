@@ -1,0 +1,19 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 3. Packages and Patches"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 3. Packages and Patches
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter03/chapter03.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ansible_distribution}}: 3.1. Introduction"
+  include: introduction.yml
+
+- name: "{{ansible_distribution}}: 3.2. All Packages"
+  include: packages.yml
+
+- name: "{{ansible_distribution}}: 3.3. Needed Patches"
+  include: patches.yml

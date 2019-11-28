@@ -1,0 +1,10 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 4.5. About SBUs"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 4.5. About SBUs 
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter04/aboutsbus.html
+  debug:
+    msg: "{{ msg.split('\n') }}"

@@ -1,0 +1,36 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 4.3. Adding the LFS User"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 4.3. Adding the LFS User
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter04/addinguser.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: create the lfs group"
+  group:
+    name: lfs
+    state: present
+
+- name: "{{ ansible_distribution }}: create the lfs user"
+  user:
+    append: yes
+    groups: lfs
+    home: /home/lfs
+    name: lfs
+    password: $5$rounds=535000$zIy3fwhTc91NB/RN$Vg5tXkQEMW3HYbVT0dOWQQt3ZZRVJNSREWQkvbNHYZ4
+    shell: /bin/bash
+    skeleton: /dev/null
+
+- name: "{{ ansible_distribution }}: assign ownership of $LFS/sources and $LFS/tools to the lfs user"
+  file:
+    group: lfs
+    owner: lfs
+    path: "{{ item }}"
+    recurse: yes
+    state: directory
+  with_items:
+    - "{{ lfs }}/sources"
+    - "{{ lfs }}/tools"

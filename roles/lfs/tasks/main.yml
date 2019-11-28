@@ -1,0 +1,10 @@
+---
+
+- name: "{{ansible_distribution}}: I. Introduction"
+  include: I_Introduction/main.yml
+
+- name: "{{ansible_distribution}}: II. Preparing for the Build"
+  include: II_Preparing_for_the_Build/main.yml
+
+#- name: "{{ansible_distribution}}: III. Building the LFS System"
+#  include: III_Building_the_LFS_System/main.yml

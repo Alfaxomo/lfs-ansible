@@ -1,0 +1,59 @@
+---
+
+- name: "{{ ansible_distribution }}: 2.4. Creating a New Partition"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      2.4. Creating a New Partition
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter02/creatingpartition.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: print the hostname, ip, device info and other details of the host"
+  debug:
+    msg:
+      - "{{ ansible_hostname }}"
+      - "{{ ansible_default_ipv4.address }}"
+
+- name: testing parted
+  parted:
+    device: "{{ device }}"
+    unit: MiB
+  register: device_info
+
+- name: output device_info
+  debug:
+    msg: "{{ device_info.partitions }}"
+
+- name: check if partitions exist
+  pause:
+    prompt: "Oops. Looks like partitions exist on this device. Press Ctrl+c and 'a' to abort."
+  #when: ( device_info.partitions | length>0 ) # this did not work (cause a string is being retured i think)
+  #when: device_info.partitions | default(false, true) and device_info.partitions | trim != '' # this actually worked, but seems overly complex
+  when: device_info.partitions
+  # https://docs.python.org/3/library/stdtypes.html#truth-value-testing
+  # https://www.reddit.com/r/ansible/comments/ansp77/how_to_test_for_empty_string_in_a_variable/
+
+- name: check if partitions do not exist
+  debug:
+    msg: No partitions detected, proceeding to next step
+  #when: ( device_info.partitions | length<0 ) # this didn't work
+  #when: "device_info.partitions.stdout == 1" # this also didn't work
+  #when: device_info.partitions | default(false, true) and device_info.partitions | trim == '' # this didn't work though it works above when partitions do exist
+  when: not device_info.partitions
+  # https://docs.python.org/3/library/stdtypes.html#truth-value-testing
+  # https://www.reddit.com/r/ansible/comments/ansp77/how_to_test_for_empty_string_in_a_variable/
+
+- name: "{{ ansible_distribution }}: confirm that you want to perform the following tasks"
+  pause:
+    prompt: 'Please confirm you want to exterminate mankind! Press return to continue. Press Ctrl+c and then "a" to abort'
+
+- name: "{{ ansible_distribution }}: the device name must be passed in --extra-vars"
+  debug:
+    msg: You must pass the device name (i.e. /dev/sdX) in --extra-vars when running this playbook
+
+- name: "{{ ansible_distribution }}: create the root partition"
+  parted:
+    device: "{{ device }}"
+    number: 1
+    state: present
