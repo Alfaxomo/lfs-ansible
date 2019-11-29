@@ -12,20 +12,37 @@
 - name: "{{ansible_distribution}}: create the sources directory"
   file:
     mode: a+wt
-    path: "{{ lfs }}/sources"
+    path: "{{ lfs_src }}"
     state: directory
+
+- name: "{{ ansible_distribution }}: download the sources list file"
+  get_url:
+    dest: "{{ lfs_src }}"
+    url: "{{ item }}"
+  with_items:
+    - http://www.linuxfromscratch.org/lfs/view/stable/wget-list
+    - http://www.linuxfromscratch.org/lfs/view/stable/md5sums
+
+- name: "{{ ansible_distribution }}: download the sources list file"
+  # https://stackoverflow.com/questions/33541870/how-do-i-loop-over-each-line-inside-a-file-with-ansible
+  # https://github.com/sodle/ansible-lfs/blob/master/download_sources.yml
+  # https://stackoverflow.com/questions/36448944/is-there-an-elegant-way-to-check-file-integrity-with-md5-in-ansible-using-md5-fi
+  get_url:
+    url: "{{ item }}"
+    dest: "{{ lfs_src }}/{{ item.split('/')[-1] }}"
+  with_items: "{{ lookup('file', lfs_src + '/wget-list').splitlines() }}"
 
 #- name: "{{ ansible_distribution }}: set some vars and test"
 #  vars:
-#    wget_contents: "{{ lookup('file', lfs + '/sources/wget-list') }}"
-#    m5sum_contents: "{{ lookup('file', lfs + '/sources/md5sums') }}"
+#    wget_contents: "{{ lookup('file', lfs_src + '/wget-list') }}"
+#    m5sum_contents: "{{ lookup('file', lfs_src + '/md5sums') }}"
 #
 #  debug:
 #    msg: "{{ item }}"
 #  with_items:
 #    - "{{ wget_contents }}"
 #    - "{{ md5sum_contents }}"
-#
+
 # this doesn't work ffs, no idea why, getting:
 # [WARNING]: Unable to find '/mnt/lfs/sources/wget-list' in expected paths (use -vvvvv to see paths)
 # File lookup using None as file
@@ -51,13 +68,6 @@
 #  debug:
 #    msg: "{{ md5_value }}"
 #
-#- name: "{{ ansible_distribution }}: download the sources list file"
-#  # https://github.com/sodle/ansible-lfs/blob/master/download_sources.yml
-#  # https://stackoverflow.com/questions/36448944/is-there-an-elegant-way-to-check-file-integrity-with-md5-in-ansible-using-md5-fi
-#  get_url:
-#    url: "{{ item }}"
-#    dest: "{{ lfs }}/sources/{{ item.split('/')[-1] }}"
-#  with_items: "{{ lookup('file', lfs + '/sources/wget-list').splitlines() }}"
 
 ## NOTE
 ### Not doing this until I can figure out how to make it idempotent

@@ -16,9 +16,9 @@
       - "{{ device }}1"
 
 - name: "{{ ansible_distribution }}: mount device on /mnt/lfs"
-  shell: mount -t "{{ fs }}" "{{ device }}1" "{{ lfs }}"
-  #mount:
-  #  fstype: "{{ fs }}"
-  #  name: "{{ lfs }}"
-  #  src: "{{ device }}1"
-  #  state: mounted
+  #shell: mount -t "{{ fs }}" "{{ device }}1" "{{ lfs }}"
+  mount:
+    fstype: "{{ fs }}"
+    name: "{{ lfs }}"
+    src: "{{ device }}1"
+    state: mounted

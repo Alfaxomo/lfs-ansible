@@ -9,14 +9,14 @@
     msg: "{{ msg.split('\n') }}"
 
 
-- name: "{{ansible_distribution}}: Chapter 2. Preparing the Host System"
-  include: 2_Preparing_the_Host_System/main.yml
+#- name: "{{ansible_distribution}}: Chapter 2. Preparing the Host System"
+#  include: 2_Preparing_the_Host_System/main.yml
 
-- name: "{{ansible_distribution}}: Chapter 3. Packages and Patches"
-  include: 3_Packages_and_Patches/main.yml
+#- name: "{{ansible_distribution}}: Chapter 3. Packages and Patches"
+#  include: 3_Packages_and_Patches/main.yml
 
-- name: "{{ansible_distribution}}: Chapter 4. Final Preparations"
-  include: 4_Final_Preparations/main.yml
+#- name: "{{ansible_distribution}}: Chapter 4. Final Preparations"
+#  include: 4_Final_Preparations/main.yml
 
-#- name: "{{ansible_distribution}}: Chapter 5. Constructing a Temporary System"
-#  include: 5_Constructing_a_Temporary_System/main.yml
+- name: "{{ansible_distribution}}: Chapter 5. Constructing a Temporary System"
+  include: 5_Constructing_a_Temporary_System/main.yml
