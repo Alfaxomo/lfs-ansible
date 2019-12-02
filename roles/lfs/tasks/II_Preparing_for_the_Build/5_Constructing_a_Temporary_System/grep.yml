@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/grep.html
-## 5.25. Grep-3.3
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.25. grep"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.25. grep
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/grep.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install grep.sh"
+  copy:
+    dest: /tmp/grep.sh
+    src: grep.sh
+
+- name: "{{ ansible_distribution }}: run grep.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/grep.sh

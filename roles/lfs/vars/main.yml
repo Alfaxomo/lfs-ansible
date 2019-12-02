@@ -1,4 +1,7 @@
+LFS: /mnt/lfs
 lfs: /mnt/lfs
+LFS_TGT: "{{ ansible_architecture }}-lfs-linux-gnu"
+LC_ALL: POSIX
 lfs_src: /mnt/lfs/sources
 #fs: xfs
 fs: ext4

@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/bash.html
-## 5.16. Bash-5.0
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.16. bash"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.16. bash
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/bash.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install bash.sh"
+  copy:
+    dest: /tmp/bash.sh
+    src: bash.sh
+
+- name: "{{ ansible_distribution }}: run bash.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/bash.sh

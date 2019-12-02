@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/m4.html
-## 5.14. M4-1.4.18
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.14. M4"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.14. M4
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/m4.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install m4.sh"
+  copy:
+    dest: /tmp/m4.sh
+    src: m4.sh
+
+- name: "{{ ansible_distribution }}: run m4.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/m4.sh

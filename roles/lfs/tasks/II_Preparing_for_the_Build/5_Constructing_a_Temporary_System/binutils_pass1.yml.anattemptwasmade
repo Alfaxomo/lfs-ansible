@@ -1,0 +1,103 @@
+---
+
+- name: "{{ ansible_distribution }}: Chapter 5.4 binutils pass 1"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.4. binutils pass 1
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/binutils-pass1.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: binutils pass1"
+  block:
+
+    - name: "{{ ansible_distribution }}: create binutils_source var"
+      shell: find "{{ lfs_src }}" -type f -name binutils\*.tar.xz
+      register: binutils_source
+
+    - name: "{{ ansible_distribution }}: output var"
+      debug:
+        msg: "{{ binutils_source.stdout }}"
+
+    - name: create non-working, but potentially very useful, binutils var
+      vars:
+        binutils: "{{ binutils_source.stdout.split('.tar.xz')[0] }}"
+      debug:
+        msg: "binutils: {{ binutils }}"
+
+    - name: "{{ ansible_distribution }}: unpack binutils"
+      unarchive:
+        creates: "{{ binutils_source.stdout.split('.tar.xz')[0] }}"
+        #creates: "{{ binutils }}" # from some fucking stupid reason this var isn't getting picked up although it does above.
+        dest: "{{ lfs_src }}"
+        src: "{{ binutils_source.stdout }}"
+
+    - name: "{{ ansible_distribution }}: create the build directory"
+      file:
+        dest: "{{ binutils_source.stdout.split('.tar.xz')[0] }}/build"
+        state: directory
+      register: binutils_build
+
+    - name: "{{ ansible_distribution }}: configure"
+      shell: |
+        ../configure --prefix=/tools            \
+                     --with-sysroot=$LFS        \
+                     --with-lib-path=/tools/lib \
+                     --target=$LFS_TGT          \
+                     --disable-nls              \
+                     --disable-werror
+      args:
+        chdir: "{{ binutils_source.stdout.split('.tar.xz')[0] }}/build"
+        creates: "{{ binutils_source.stdout.split('.tar.xz')[0] }}/build/Makefile"
+
+    - name: debug output
+      debug:
+        msg: "{{ binutils_source.stdout.split('.tar.xz')[0] }}/Makefile"
+
+    - name: "{{ ansible_distribution }}: check if make needs to be run"
+      stat:
+        path: "{{ binutils_source.stdout.split('.tar.xz')[0] }}/build/binutils"
+      register: build_binutils
+
+    - name: "{{ ansible_distribution }}: make"
+      make:
+        chdir: "{{ binutils_source.stdout.split('.tar.xz')[0] }}/build"
+        params:
+          NUM_THREADS: "{{ threads }}"
+      when: not build_binutils.stat.exists
+
+    - name: "{{ ansible_distribution }}: ensure the sanity of the toolchain"
+      args:
+        creates: "{{ item }}"
+      shell: |
+        case $(uname -m) in
+          x86_64) mkdir -v /tools/lib && ln -sv lib /tools/lib64 ;;
+        esac
+      with_items:
+        - /tools/lib
+        - /tools/lib64
+
+    - name: "{{ ansible_distribution }}: check if 'make install' needs to be run"
+      stat:
+      #  path: "{{ item }}"
+         path: "{{ lfs }}/tools/lib/libbfd.a"
+      register: binutils_lib
+      #with_items:
+      #  - "{{ lfs }}/tools/lib/libbfd.a"
+      #  - "{{ lfs }}/tools/lib/libbfd.la"
+      #  - "{{ lfs }}/tools/lib/libopcodes.a"
+      #  - "{{ lfs }}/tools/lib/libopcodes.la"
+
+    - name: "{{ ansible_distribution }}: make install"
+      make:
+        chdir: "{{ binutils_source.stdout.split('.tar.xz')[0] }}/build"
+        params:
+          NUM_THREADS: "{{ threads }}"
+        target: install
+      when: not binutils_lib.stat.exists
+
+    #- name: "{{ ansible_distribution }}: cleanup"
+    #  file:
+    #    path: "{{ binutils_source.stdout.split('.tar.xz')[0] }}"
+    #    state: absent

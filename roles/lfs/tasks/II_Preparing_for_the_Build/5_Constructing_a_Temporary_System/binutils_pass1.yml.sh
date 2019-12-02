@@ -9,17 +9,13 @@
   debug:
     msg: "{{ msg.split('\n') }}"
 
-- name: "{{ ansible_distribution }}: install binutils_env.sh"
-  copy:
-    dest: /tmp/binutils_env.sh
-    src: binutils_env.sh
-
 - name: "{{ ansible_distribution }}: install binutils_pass1.sh"
   copy:
     dest: /tmp/binutils_pass1.sh
     src: binutils_pass1.sh
 
-- name: "{{ ansible_distribution }}: run binutils_pass1.sh"
+- name: "{{ ansible_distribution }}: run binutils.sh"
   become: true
   become_user: lfs
-  shell: /tmp/binutils_pass1.sh
+  #shell: source /home/lfs/.bash_profile && bash /tmp/binutils_pass1.sh
+  script: /tmp/binutils_pass1.sh

@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gawk.html
-## 5.23. Gawk-4.2.1
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.23. gawk"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.23. gawk
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gawk.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install gawk.sh"
+  copy:
+    dest: /tmp/gawk.sh
+    src: gawk.sh
+
+- name: "{{ ansible_distribution }}: run gawk.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/gawk.sh

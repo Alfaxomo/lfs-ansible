@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/ncurses.html
-## 5.15. Ncurses-6.1
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.15. ncurses"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.15. ncurses
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/ncurses.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install ncurses.sh"
+  copy:
+    dest: /tmp/ncurses.sh
+    src: ncurses.sh
+
+- name: "{{ ansible_distribution }}: run ncurses.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/ncurses.sh

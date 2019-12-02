@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/bison.html
-## 5.17. Bison-3.3.2
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.17. bison"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.17. bison
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/bison.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install bison.sh"
+  copy:
+    dest: /tmp/bison.sh
+    src: bison.sh
+
+- name: "{{ ansible_distribution }}: run bison.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/bison.sh

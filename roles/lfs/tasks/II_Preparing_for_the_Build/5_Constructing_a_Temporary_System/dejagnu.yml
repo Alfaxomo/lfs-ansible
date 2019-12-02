@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/dejagnu.html
-## 5.13. DejaGNU-1.6.2
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.13. DejaGNU"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.13. DejaGNU
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/dejagnu.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install dejagnu.sh"
+  copy:
+    dest: /tmp/dejagnu.sh
+    src: dejagnu.sh
+
+- name: "{{ ansible_distribution }}: run dejagnu.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/dejagnu.sh

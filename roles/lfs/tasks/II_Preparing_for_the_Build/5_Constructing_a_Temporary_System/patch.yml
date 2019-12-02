@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/patch.html
-## 5.28. Patch-2.7.6
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.28. patch"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.28. patch
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/patch.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install patch.sh"
+  copy:
+    dest: /tmp/patch.sh
+    src: patch.sh
+
+- name: "{{ ansible_distribution }}: run patch.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/patch.sh

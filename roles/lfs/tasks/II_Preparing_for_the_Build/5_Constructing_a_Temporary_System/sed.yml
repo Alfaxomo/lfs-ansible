@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/sed.html
-## 5.31. Sed-4.7
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.31. sed"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.31. sed
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/sed.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install sed.sh"
+  copy:
+    dest: /tmp/sed.sh
+    src: sed.sh
+
+- name: "{{ ansible_distribution }}: run sed.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/sed.sh

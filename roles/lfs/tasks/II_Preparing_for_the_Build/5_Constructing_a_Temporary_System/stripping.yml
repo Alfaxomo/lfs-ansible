@@ -1,2 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/stripping.html
-## 5.35. Stripping
+---
+
+- name: "{{ ansible_distribution }}: Chapter 5.35. stripping"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.35. stripping
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/stripping.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install stripping.sh"
+  copy:
+    dest: /tmp/stripping.sh
+    src: stripping.sh
+
+- name: "{{ ansible_distribution }}: run stripping.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/stripping.sh

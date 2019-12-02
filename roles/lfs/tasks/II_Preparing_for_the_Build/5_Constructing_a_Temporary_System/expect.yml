@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/expect.html
-## 5.12. Expect-5.45.4
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.12. Expect"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.12. Expect
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/expect.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install expect.sh"
+  copy:
+    dest: /tmp/expect.sh
+    src: expect.sh
+
+- name: "{{ ansible_distribution }}: run expect.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/expect.sh

@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/coreutils.html
-## 5.19. Coreutils-8.30
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.19. coreutils"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.19. coreutils
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/coreutils.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install coreutils.sh"
+  copy:
+    dest: /tmp/coreutils.sh
+    src: coreutils.sh
+
+- name: "{{ ansible_distribution }}: run coreutils.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/coreutils.sh

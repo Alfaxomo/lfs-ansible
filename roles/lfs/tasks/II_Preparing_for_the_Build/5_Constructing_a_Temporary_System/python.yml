@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/Python.html
-## 5.30. Python-3.7.2
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.30. python"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.30. python
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/python.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install python.sh"
+  copy:
+    dest: /tmp/python.sh
+    src: python.sh
+
+- name: "{{ ansible_distribution }}: run python.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/python.sh

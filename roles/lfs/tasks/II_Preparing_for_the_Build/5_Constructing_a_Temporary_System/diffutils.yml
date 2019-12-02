@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/diffutils.html
-## 5.20. Diffutils-3.7
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.20. diffutils"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.20. diffutils
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/diffutils.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install diffutils.sh"
+  copy:
+    dest: /tmp/diffutils.sh
+    src: diffutils.sh
+
+- name: "{{ ansible_distribution }}: run diffutils.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/diffutils.sh

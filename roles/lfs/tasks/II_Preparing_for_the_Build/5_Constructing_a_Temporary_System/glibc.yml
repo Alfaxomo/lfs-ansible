@@ -1,49 +1,25 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/glibc.html
-## 5.7. Glibc-2.29
+---
 
-- name: "{{ansible_distribution}}: unpack glibc"
-  unarchive:
-    creates: "{{lfs}}/sources/glibc-2.29"
-    dest: "{{lfs}}/sources"
-    src: "{{lfs}}/sources/glibc-2.29.tar.xz"
+- name: "{{ ansible_distribution }}: Chapter 5.7. Glibc"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.7. Glibc
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/glibc.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
 
-- name: "{{ansible_distribution}}: create the build directory"
-  file: 
-    dest: "{{lfs}}/sources/glibc-2.29/build"
-    state: directory
+- name: "{{ ansible_distribution }}: install glibc_env.sh"
+  copy:
+    dest: /tmp/glibc_env.sh
+    src: glibc_env.sh
 
-- name: "{{ansible_distribution}}: configure"
-  args:
-    chdir: "{{lfs}}/sources/glibc-2.29/build"
-    creates: config.status
-  shell: |
-    ../configure                             \
-          --prefix=/tools                    \
-          --host=$LFS_TGT                    \
-          --build=$(../scripts/config.guess) \
-          --enable-kernel=3.2                \
-          --with-headers=/tools/include
+- name: "{{ ansible_distribution }}: install glibc.sh"
+  copy:
+    dest: /tmp/glibc.sh
+    src: glibc.sh
 
-- name: "{{ansible_distribution}}: make"
-  make:
-    chdir: "{{lfs}}/sources/glibc-2.29/build"
-    params:
-      NUM_THREADS: 4
-
-
-- name: "{{ansible_distribution}}: make install"
-  make:
-    chdir: "{{lfs}}/sources/glibc-2.29/build"
-    params:
-      NUM_THREADS: 4
-    target: install
-
-- name: "{{ansible_distribution}}: check things are a-ok"
-  shell: |
-    echo 'int main(){}' > dummy.c
-    $LFS_TGT-gcc dummy.c
-    readelf -l a.out | grep ': /tools'
-  register: check_glibc
-
-- name: "{{ansible_distribution}}: show me check_glibc output"
-  debug: msg={{check_glibc.stdout}}
+- name: "{{ ansible_distribution }}: run glibc.sh"
+  become: true
+  become_user: lfs
+  shell: /tmp/glibc.sh

@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-pass2.html
-## 5.10. GCC-8.2.0 - Pass 2
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.10. gcc pass 2"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.10. gcc pass 2
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-pass2.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install gcc_pass2.sh"
+  copy:
+    dest: /tmp/gcc_pass2.sh
+    src: gcc_pass2.sh
+
+- name: "{{ ansible_distribution }}: run gcc_pass2.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/gcc_pass2.sh

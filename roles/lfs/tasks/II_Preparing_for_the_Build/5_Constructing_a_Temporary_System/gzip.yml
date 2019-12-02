@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gzip.html
-## 5.26. Gzip-1.10
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.26. gzip"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.26. gzip
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gzip.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install gzip.sh"
+  copy:
+    dest: /tmp/gzip.sh
+    src: gzip.sh
+
+- name: "{{ ansible_distribution }}: run gzip.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/gzip.sh

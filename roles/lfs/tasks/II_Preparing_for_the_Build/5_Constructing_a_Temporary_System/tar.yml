@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/tar.html
-## 5.32. Tar-1.31
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.32. tar"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.32. tar
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/tar.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install tar.sh"
+  copy:
+    dest: /tmp/tar.sh
+    src: tar.sh
+
+- name: "{{ ansible_distribution }}: run tar.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/tar.sh

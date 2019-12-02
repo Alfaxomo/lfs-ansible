@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/findutils.html
-## 5.22. Findutils-4.6.0
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.22. findutils"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.22. findutils
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/findutils.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install findutils.sh"
+  copy:
+    dest: /tmp/findutils.sh
+    src: findutils.sh
+
+- name: "{{ ansible_distribution }}: run findutils.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/findutils.sh

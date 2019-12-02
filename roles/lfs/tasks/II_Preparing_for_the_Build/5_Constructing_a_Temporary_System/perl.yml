@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/perl.html
-## 5.29. Perl-5.28.1
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.29. perl"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.29. perl
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/perl.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install perl.sh"
+  copy:
+    dest: /tmp/perl.sh
+    src: perl.sh
+
+- name: "{{ ansible_distribution }}: run perl.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/perl.sh

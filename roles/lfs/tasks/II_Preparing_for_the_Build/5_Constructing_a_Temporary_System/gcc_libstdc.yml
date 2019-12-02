@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-libstdc++.html
-## 5.8. Libstdc++ from GCC-8.2.0
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.8. Libstdc++ from GCC
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapters 5.8. Libstdc++ from GCC
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/gcc-libstdc++.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install glibc.sh"
+  copy:
+    dest: /tmp/glibc.sh
+    src: glibc.sh
+
+- name: "{{ ansible_distribution }}: run glibc.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/glibc.sh

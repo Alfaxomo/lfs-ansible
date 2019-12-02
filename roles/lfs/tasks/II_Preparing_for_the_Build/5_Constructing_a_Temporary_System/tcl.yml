@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/tcl.html
-## 5.11. Tcl-8.6.9
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.11. Tcl"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.11. Tcl
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/tcl.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install tcl.sh"
+  copy:
+    dest: /tmp/tcl.sh
+    src: tcl.sh
+
+- name: "{{ ansible_distribution }}: run tcl.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/tcl.sh

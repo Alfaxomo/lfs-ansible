@@ -1,3 +1,20 @@
---- # http://www.linuxfromscratch.org/lfs/view/stable/chapter05/texinfo.html
-## 5.33. Texinfo-6.5
+---
 
+- name: "{{ ansible_distribution }}: Chapter 5.33. texinfo"
+  vars:
+    msg: |
+      Linux From Scratch - Latest Stable
+      Chapter 5.33. texinfo
+      http://www.linuxfromscratch.org/lfs/view/stable/chapter05/texinfo.html
+  debug:
+    msg: "{{ msg.split('\n') }}"
+
+- name: "{{ ansible_distribution }}: install texinfo.sh"
+  copy:
+    dest: /tmp/texinfo.sh
+    src: texinfo.sh
+
+- name: "{{ ansible_distribution }}: run texinfo.sh"
+  become: true
+  become_user: lfs
+  script: /tmp/texinfo.sh
