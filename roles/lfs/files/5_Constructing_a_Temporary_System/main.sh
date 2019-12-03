@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## this must be run as the lfs user
+
 LFS=/mnt/lfs
 LC_ALL=POSIX
 LFS_TGT=$( uname -m )-lfs-linux-gnu
@@ -8,10 +10,10 @@ lfs_src=/mnt/lfs/sources
 
 _binutils_pass1() {
 
- binutils_source=$( find /mnt/lfs/sources -name binutils*.tar.xz )
- # https://stackoverflow.com/questions/125281/how-do-i-remove-the-file-suffix-and-path-portion-from-a-path-string-in-bash
- binutils=${binutils_source%.tar.xz}
- build="${binutils}/build"
+  binutils_source=$( find /mnt/lfs/sources -name binutils*.tar.xz )
+  # https://stackoverflow.com/questions/125281/how-do-i-remove-the-file-suffix-and-path-portion-from-a-path-string-in-bash
+  binutils=${binutils_source%.tar.xz}
+  build="${binutils}/build"
 
   cd "${lfs_src}" && \
   tar -vxf "${binutils_source}"
