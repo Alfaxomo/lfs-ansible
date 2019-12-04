@@ -1916,7 +1916,7 @@ _util_linux() {
   make -j4 && \
   make -j4 install
 
-  rm -Rf '${util_linux}"
+  rm -Rf "${util_linux}"
 
 }
 
