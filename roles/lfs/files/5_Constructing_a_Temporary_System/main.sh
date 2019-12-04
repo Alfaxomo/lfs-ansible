@@ -512,8 +512,8 @@ _bison() {
   ./configure --prefix=/tools
 
   cd "${bison}" && \
-  make -j4 && \
-  make -j4 install
+  make -j1 && \
+  make -j1 install
 
   rm -Rf "${bison}"
 
